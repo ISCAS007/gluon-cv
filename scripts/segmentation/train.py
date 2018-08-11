@@ -52,9 +52,6 @@ def parse_args():
     # cuda and logging
     parser.add_argument('--no-cuda', action='store_true', default=
                         False, help='disables CUDA training')
-    parser.add_argument('--ngpus', type=int,
-                        default=len(mx.test_utils.list_gpus()),
-                        help='number of GPUs (default: 4)')
     parser.add_argument('--kvstore', type=str, default='device',
                         help='kvstore to use for trainer/module.')
     # checking point
@@ -78,8 +75,8 @@ def parse_args():
         args.kvstore = 'local'
         args.ctx = mx.cpu(0)
     else:
-        print('Number of GPUs:', args.ngpus)
-        args.ctx = [mx.gpu(i) for i in range(args.ngpus)]
+        gpus = [int(x) for x in os.environ["CUDA_VISIBLE_DEVICES"].split(',')]
+        args.ctx = [mx.gpu(i) for i in range(len(gpus))]
     # Synchronized BatchNorm
     args.norm_layer = mx.gluon.contrib.nn.SyncBatchNorm if args.syncbn \
         else mx.gluon.nn.BatchNorm
