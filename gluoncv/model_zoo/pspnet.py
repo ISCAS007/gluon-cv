@@ -136,6 +136,7 @@ def get_psp(dataset='pascal_voc', backbone='resnet50', pretrained=False,
     """
     from ..data.pascal_voc.segmentation import VOCSegmentation
     from ..data.ade20k.segmentation import ADE20KSegmentation
+    from ..data.cityscapes.segmentation import CityscapesFineSegmentation,CityscapesCoarseSegmentation
     acronyms = {
         'pascal_voc': 'voc',
         'ade20k': 'ade',
@@ -143,6 +144,8 @@ def get_psp(dataset='pascal_voc', backbone='resnet50', pretrained=False,
     datasets = {
         'pascal_voc': VOCSegmentation,
         'ade20k': ADE20KSegmentation,
+        'cityscapes_fine': CityscapesFineSegmentation,
+        'cityscapes_coarse': CityscapesCoarseSegmentation,
     }
     # infer number of classes
     model = PSPNet(datasets[dataset].NUM_CLASS, backbone=backbone,

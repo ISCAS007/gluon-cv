@@ -115,15 +115,18 @@ def get_fcn(dataset='pascal_voc', backbone='resnet50', pretrained=False,
     from ..data.pascal_voc.segmentation import VOCSegmentation
     from ..data.pascal_aug.segmentation import VOCAugSegmentation
     from ..data.ade20k.segmentation import ADE20KSegmentation
+    from ..data.cityscapes.segmentation import CityscapesFineSegmentation,CityscapesCoarseSegmentation
     acronyms = {
         'pascal_voc': 'voc',
         'pascal_aug': 'voc',
         'ade20k': 'ade',
     }
     datasets = {
+        'ade20k': ADE20KSegmentation,
         'pascal_voc': VOCSegmentation,
         'pascal_aug': VOCAugSegmentation,
-        'ade20k': ADE20KSegmentation,
+        'cityscapes_fine': CityscapesFineSegmentation,
+        'cityscapes_coarse': CityscapesCoarseSegmentation,
     }
     # infer number of classes
     model = FCN(datasets[dataset].NUM_CLASS, backbone=backbone, pretrained_base=pretrained_base,

@@ -13,10 +13,13 @@ def get_segmentation_dataset(name, **kwargs):
     from .pascal_voc.segmentation import VOCSegmentation
     from .pascal_aug.segmentation import VOCAugSegmentation
     from .ade20k.segmentation import ADE20KSegmentation
+    from .cityscapes.segmentation import CityscapesFineSegmentation,CityscapesCoarseSegmentation
     datasets = {
         'ade20k': ADE20KSegmentation,
         'pascal_voc': VOCSegmentation,
         'pascal_aug': VOCAugSegmentation,
+        'cityscapes_fine': CityscapesFineSegmentation,
+        'cityscapes_coarse': CityscapesCoarseSegmentation,
     }
     return datasets[name](**kwargs)
 

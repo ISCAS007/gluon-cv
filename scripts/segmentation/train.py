@@ -9,8 +9,8 @@ from mxnet import gluon, autograd
 from mxnet.gluon.data.vision import transforms
 
 from gluoncv.utils import LRScheduler
-from gluoncv.model_zoo.segbase import *
-from gluoncv.utils.parallel import *
+from gluoncv.model_zoo.segbase import get_segmentation_model,SoftmaxCrossEntropyLossWithAux,SegEvalModel
+from gluoncv.utils.parallel import DataParallelModel,DataParallelCriterion
 from gluoncv.data import get_segmentation_dataset
 
 
@@ -20,11 +20,14 @@ def parse_args():
                                      Segmentation')
     # model and dataset 
     parser.add_argument('--model', type=str, default='fcn',
+                        choices=['fcn','psp'],
                         help='model name (default: fcn)')
     parser.add_argument('--backbone', type=str, default='resnet50',
+                        choices=['resnet50','resnet101','resnet152'],
                         help='backbone name (default: resnet50)')
-    parser.add_argument('--dataset', type=str, default='pascalaug',
-                        help='dataset name (default: pascal)')
+    parser.add_argument('--dataset', type=str, default='pascal_voc',
+                        choices=['pascal_aug','pascal_voc','ade20k','cityscapes_fine','cityscapes_coarse'],
+                        help='dataset name (default: pascal_voc)')
     parser.add_argument('--workers', type=int, default=16,
                         metavar='N', help='dataloader threads')
     # training hyper params
